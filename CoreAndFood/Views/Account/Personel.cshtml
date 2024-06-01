@@ -1,0 +1,33 @@
+﻿@model CoreAndFood.Data.Models.Account
+@{
+    ViewData["Title"] = "GetPersonelSettings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<table class="table table-bordered">
+    <h1>Personnel Information</h1>
+    <br/>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>User Name</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>Role</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Model.AdminID</td>
+            <td>@Model.UserName</td>
+            <td>@Model.Email</td>
+            <td>@Model.Password</td> 
+            <td>@Model.Role</td>
+        </tr>
+    </tbody>
+</table>
+<a href="/Account/PersonelGet/" class="btn btn-primary">Update</a>
+
+
+
+

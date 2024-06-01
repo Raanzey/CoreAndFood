@@ -1,0 +1,43 @@
+﻿@model CoreAndFood.Data.Models.Food
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "AddFood";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+
+
+<form asp-controller="Food" asp-action="AddFood" method="post">
+    <h1>Food Add Page</h1>
+    <br />
+    <b>Name</b>
+    <br />
+    <input asp-for="Name" class="form-control" /> <span asp-validation-for="Name" class=" alert-danger"></span>
+    <br />  
+    <b>Price</b>
+    <br />
+    <input asp-for="Price" class="form-control" /> <span asp-validation-for="Name" class=" alert-danger"></span>
+    <br />
+    <b>Stock</b>
+    <br />
+    <input asp-for="Stock" class="form-control" /> <span asp-validation-for="Stock" class=" alert-danger"></span>
+    <br />
+    <b>Image URL</b>
+    <br />
+    <input asp-for="ImageURL" class="form-control" />
+    <br />
+    <b>Category</b>
+    <br />
+    <select asp-for="CategoryID" asp-items="@(List<SelectListItem>)ViewBag.category_List" class="form-control">
+        <option value="">--Seçiniz--</option>
+    </select>
+    <br />
+    <b>Desciption</b>
+    <br />
+    <textarea asp-for="Description" class="form-control" rows="4"></textarea> <span asp-validation-for="Description" class=" alert-danger"></span>
+    <br />
+    <button class="btn btn-primary">Save</button>
+</form>
+

@@ -1,0 +1,28 @@
+﻿@model CoreAndFood.Data.Models.Account
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "PersonelUpdate";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form asp-controller="Account" asp-action="PersonelUpdate" method="post">
+    <h1>Personel Update</h1>
+    <br/>
+    <b>ID</b>
+    <br />
+    <input asp-for="AdminID" class="form-control" readonly />
+    <br />
+    <b>Name</b>
+    <br />
+    <input asp-for="UserName" class="form-control" /> <span asp-validation-for="UserName" class=" alert-danger"></span>
+    <br />
+    <b>E-Mail</b>
+    <br />
+    <input asp-for="Email" class="form-control" /> <span asp-validation-for="Email" class=" alert-danger"></span>
+    <br />
+    <b>Price</b>
+    <br />
+    <input asp-for="Password" class="form-control" /> <span asp-validation-for="Password" class=" alert-danger"></span>
+    <br />
+    <button class="btn btn-primary">Save</button>
+</form>

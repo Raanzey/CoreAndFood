@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+
+	<ItemGroup>
+    <None Include="wwwroot\web2\.gitattributes" />
+    <None Include="wwwroot\web2\js\Chart1.js" />
+    <None Include="wwwroot\web2\js\clndr.js" />
+    <None Include="wwwroot\web2\js\easyResponsiveTabs.js" />
+    <None Include="wwwroot\web2\js\jquery.easydropdown.js" />
+    <None Include="wwwroot\web2\js\jquery.min.js" />
+    <None Include="wwwroot\web2\js\jquery.nicescroll.js" />
+    <None Include="wwwroot\web2\js\jquery.vmap.js" />
+    <None Include="wwwroot\web2\js\jquery.vmap.sampledata.js" />
+    <None Include="wwwroot\web2\js\jquery.vmap.world.js" />
+    <None Include="wwwroot\web2\js\main.js" />
+    <None Include="wwwroot\web2\js\moment-2.2.1.js" />
+    <None Include="wwwroot\web2\js\site.js" />
+    <None Include="wwwroot\web2\js\underscore-min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.7">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.7">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+    <PackageReference Include="X.PagedList.Mvc.Core" Version="8.0.7" />
+  </ItemGroup>
+
+</Project>

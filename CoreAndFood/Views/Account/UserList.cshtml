@@ -1,0 +1,41 @@
+﻿@model List<CoreAndFood.Data.Models.Account>
+@{
+    ViewData["Title"] = "UserList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>User List</h1>
+<br />
+<table class="table table-bordered">
+    <tr>
+        <th>ID</th>
+        <th>User Name</th>
+        <th>Email</th>
+        <th>Password</th>
+        <th>Role</th>
+    </tr>
+    @foreach (var x in Model)
+    {
+        <tr>
+            <td>@x.AdminID</td>
+            <td>@x.UserName</td>
+            <td>@x.Email</td>
+            <td>
+                @{
+                    var currentUser = TempData["UserName"] as string;
+                    var currentUserRole = TempData["UserRole"] as string;
+                    if (x.UserName == currentUser && currentUserRole == "Admin")
+                    {
+                        @x.Password
+                    }
+                    else
+                    {
+                        @Html.Raw(new string('•', x.Password.Length))
+                    }
+                }
+            </td>
+            <td>@x.Role</td>
+        </tr>
+    }
+</table>
+<a href="/Account/NewLogin/" class="btn btn-primary">New User</a>

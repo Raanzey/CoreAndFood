@@ -1,0 +1,27 @@
+﻿@model CoreAndFood.Data.Models.Category
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "CategoryAdd";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script src="~/jquery/jquery.min.js"></script>
+<script src="~/jquery-validate/jquery.validate.min.js"></script>
+<script src="~/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+
+<form asp-controller="Category" asp-action="CategoryAdd" method="post">
+    <h1>Category Add Page</h1>
+    <br />
+    <b>Name</b>
+    <br />
+    <input asp-for="Name" class="form-control"/> <span asp-validation-for="Name" class=" alert-danger"></span>
+    <br/>
+    <b>Description</b>
+    <br />
+    <input asp-for="Description" class="form-control" />
+    <br />
+    <button class="btn btn-info">Save</button>
+</form>
+

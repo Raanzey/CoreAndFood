@@ -100,6 +100,11 @@ namespace CoreAndFood.Controllers
             var Furit = c.Foods.Where(x => x.CategoryID == fruitID).Count();
             ViewBag.furit = Furit;
 
+            //var m = c.Foods.Where(s => true).Select(m => new
+            //{
+            //    data1=m
+            //});
+
             var Vegetables = c.Foods.Where(x => x.CategoryID == c.Categories.Where(z => z.Name == "Sebzeler").Select(y => y.CategoryID).FirstOrDefault()).Count();
             ViewBag.vegetables = Vegetables;
 

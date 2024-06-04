@@ -17,7 +17,7 @@
     @foreach (var x in Model)
     {
         <tr>
-            <td>@x.AdminID</td>
+            <td>@x.AccountID</td>
             <td>@x.UserName</td>
             <td>@x.Email</td>
             <td>
@@ -34,8 +34,18 @@
                     }
                 }
             </td>
-            <td>@x.Role</td>
+            <td>@x.Role</td> 
         </tr>
     }
 </table>
-<a href="/Account/NewLogin/" class="btn btn-primary">New User</a>
+<div style="text-align: left;">
+    <a href="/Account/NewLogin/" class="btn btn-primary">New User</a>
+</div>
+
+    <div style="text-align: right;">
+
+    <a href="/Account/AccountGet/@TempData["accountID"]" class="btn btn-primary" style="">Update</a>
+    </div>
+
+
+

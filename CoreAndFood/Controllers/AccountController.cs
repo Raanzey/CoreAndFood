@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Text.RegularExpressions;
@@ -14,10 +15,11 @@ using System.Threading.Tasks;
 
 namespace CoreAndFood.Controllers
 {      
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         AccountRepository accountRepository = new AccountRepository();
         Context c = new Context();
+
 
         [AllowAnonymous]
         [HttpGet]  	
@@ -25,6 +27,8 @@ namespace CoreAndFood.Controllers
         {
             return View();
         }
+
+
         [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Login(Account UserValue)
@@ -48,6 +52,7 @@ namespace CoreAndFood.Controllers
             }           
         }
 
+
 		[HttpGet]
         public async Task<IActionResult> Logout()
         {
@@ -55,20 +60,18 @@ namespace CoreAndFood.Controllers
             return RedirectToAction("Login", "Account");
         }   
 
-        public IActionResult UserList()
-        {
-            var user_Name = User.Identity.Name;
 
-			var userRole = c.Accounts.FirstOrDefault(x => x.UserName == user_Name)?.Role;
+        public IActionResult UserList()
+        {       
+            var userRole = c.Accounts.FirstOrDefault(x => x.UserName == User_Name())?.Role;
 
 			if (userRole != "Admin")
 			{
-				return RedirectToAction("Personel", "Account");
+				return RedirectToAction("PersonelDetails", "Account");
 			}
-            
-            var userName = HttpContext.User.Identity.Name;
-            TempData["UserName"] = userName;
 
+            TempData["UserName"] = User_Name();
+            TempData["accountID"] = UserID();
             TempData["UserRole"] = userRole;
             return View(accountRepository.TList());
 		}
@@ -79,14 +82,15 @@ namespace CoreAndFood.Controllers
 		{
             return View();
 		}
+
+
         [HttpPost]
 		public async Task<IActionResult> NewLogin(Account NewAccount)
 		{
 
-			Regex regex = new Regex(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$");
-			if (!regex.IsMatch(NewAccount.Password))
+			if (Core.User.Control(NewAccount.Password) != null)
 			{
-				ModelState.AddModelError("Password", "Your password must be at least 8 characters and contain at least one uppercase letter, one lowercase letter, one number and one special character.");
+				ModelState.AddModelError("Password", Core.User.Control(NewAccount.Password));
 				return View(NewAccount);
 			}
 
@@ -99,57 +103,65 @@ namespace CoreAndFood.Controllers
 
 			c.Accounts.Add(NewAccount);
 			c.SaveChanges();
-
-			return View();
+            TempData["newUserSucces"] = "New user created successfully";
+            return View();
 		}
 
-        public IActionResult Personel()
+
+        public IActionResult PersonelDetails()
         {
-            var userName = User.Identity.Name;
-            var user = accountRepository.TList().FirstOrDefault(x => x.UserName == userName);
+ 
+            var user = accountRepository.TList().FirstOrDefault(x => x.UserName == User_Name());
 
             if (user == null)
             {
                 return NotFound();
             }
 
-            TempData["UserName"] = userName;
+            TempData["UserName"] = User_Name();
 
             return View(user);
         }
 
-        //public IActionResult PersonelGet() { }
 
-        public IActionResult PersonelGet(int id)
+        public IActionResult AccountGet(int id)
         {
             var x = accountRepository.TGet(id);
-            Account ct = new ()
+            Account account = new ()
             {
-                AdminID = x.AdminID,
+                AccountID = x.AccountID,
                 UserName = x.UserName,
                 Email = x.Email,
                 Password = x.Password
             };
-            return View(ct);
+			TempData["UserName"] = User_Name();
+			return View(account);
         }
+
+
         [HttpPost]
-        public IActionResult PersonelUpdate(Account parametre)
+        public IActionResult AccountGet(Account parametre)
         {
+            var userId = UserID();
 
-            var x = accountRepository.TGet(parametre.AdminID);
-            x.UserName = parametre.UserName;
-            x.Email = parametre.Email; 
-            x.Password = parametre.Password;
+			if (Core.User.Control(parametre.Password)!=null)
+			{
+				ModelState.AddModelError("Password", Core.User.Control(parametre.Password));
+				return View(parametre);
+			}
 
-            Regex regex = new Regex(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$");
-            if (!regex.IsMatch(parametre.Password))
-            {
-                ModelState.AddModelError("Password", "Your password must be at least 8 characters and contain at least one uppercase letter, one lowercase letter, one number and one special character.");
-                return View(parametre);
-            }
-            accountRepository.TUpdate(x);
-            return RedirectToAction("UserList");
+			var user = accountRepository.TGet(userId);
+            user.UserName = parametre.UserName;
+            user.Email = parametre.Email;
+            user.Password = parametre.Password;
+
+            accountRepository.TUpdate(user);
+            ViewBag.successful = "Registration was successful";
+			TempData["UserName"] = User_Name();
+			return View();
         }
+
+
 
 	}
 }

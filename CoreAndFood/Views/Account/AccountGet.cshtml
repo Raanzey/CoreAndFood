@@ -5,14 +5,16 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<form asp-controller="Account" asp-action="PersonelUpdate" method="post">
+<script src="~/jquery/jquery.min.js"></script>
+<script src="~/jquery-validate/jquery.validate.min.js"></script>
+<script src="~/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+
+
+<form asp-controller="Account" asp-action="AccountGet" method="post">
     <h1>Personel Update</h1>
     <br/>
-    <b>ID</b>
-    <br />
-    <input asp-for="AdminID" class="form-control" readonly />
-    <br />
-    <b>Name</b>
+    <b>User Name</b>
     <br />
     <input asp-for="UserName" class="form-control" /> <span asp-validation-for="UserName" class=" alert-danger"></span>
     <br />
@@ -20,9 +22,13 @@
     <br />
     <input asp-for="Email" class="form-control" /> <span asp-validation-for="Email" class=" alert-danger"></span>
     <br />
-    <b>Price</b>
+    <b>Password</b>
     <br />
     <input asp-for="Password" class="form-control" /> <span asp-validation-for="Password" class=" alert-danger"></span>
     <br />
     <button class="btn btn-primary">Save</button>
+    <br />
+    <br />
+    <label class="alert-success">@ViewBag.successful</label>
+
 </form>

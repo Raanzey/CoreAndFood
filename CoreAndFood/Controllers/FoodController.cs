@@ -12,14 +12,13 @@ using X.PagedList;
 namespace CoreAndFood.Controllers
 {
 
-	public class FoodController : Controller
+	public class FoodController : BaseController
     {
         FoodRepository foodRepository = new FoodRepository();
         Context c = new Context();
 		public IActionResult Index(int page = 1)
         {
-            var userName = HttpContext.User.Identity.Name;
-            TempData["UserName"] = userName;
+            TempData["UserName"] = User_Name();
             return View(foodRepository.TList("Category").ToPagedList(page,3));
         }
         private void PopulateCategoryList()
@@ -37,19 +36,12 @@ namespace CoreAndFood.Controllers
         {      
             PopulateCategoryList();
 
-            var userName = HttpContext.User.Identity.Name;
-            TempData["UserName"] = userName;
-
+            TempData["UserName"] = User_Name();
             return View();
         }
         [HttpPost]
         public IActionResult AddFood(Food food)
         {
-            //if (!ModelState.IsValid)
-            //{
-            //    PopulateCategoryList();
-            //    return View("AddFood");
-            //}
             foodRepository.TAdd(food);
             return RedirectToAction("Index");
         }
@@ -78,8 +70,7 @@ namespace CoreAndFood.Controllers
                 Description = x.Description,
                 ImageURL = x.ImageURL
             };
-            var userName = HttpContext.User.Identity.Name;
-            TempData["UserName"] = userName;
+            TempData["UserName"] = User_Name();
             return View(food);
         }
         [HttpPost]

@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace CoreAndFood.Controllers
 {
-    public class ChartController : Controller
+    public class ChartController : BaseController
     {
         Context c= new Context();
         FoodRepository foodRepository = new FoodRepository();
@@ -17,14 +17,12 @@ namespace CoreAndFood.Controllers
 
         public IActionResult PieChart()
         {
+            TempData["UserName"] = User_Name();
             return View();
-            var userName = HttpContext.User.Identity.Name;
-            TempData["UserName"] = userName;
         }
         public IActionResult ColumnChart()
         {
-            var userName = HttpContext.User.Identity.Name;
-            TempData["UserName"] = userName;
+            TempData["UserName"] = User_Name();
             return View();
         }
         public IActionResult VisualizeProductResult()
@@ -48,14 +46,12 @@ namespace CoreAndFood.Controllers
 
         public IActionResult DynamicChart()
         {
-            var userName = HttpContext.User.Identity.Name;
-            TempData["UserName"] = userName;
+            TempData["UserName"] = User_Name();
             return View();
         }
         public IActionResult VisualizeProductResultDynamic() 
         {
-            var userName = HttpContext.User.Identity.Name;
-            TempData["UserName"] = userName;
+            TempData["UserName"] = User_Name();
             var result = CategoryStock();
             return Json(result);
         }
@@ -86,8 +82,7 @@ namespace CoreAndFood.Controllers
 
         public IActionResult Statistics()
         {
-            var userName = HttpContext.User.Identity.Name;
-            TempData["UserName"] = userName;
+            TempData["UserName"] = User_Name();
 
             var totalfood = c.Foods.Count();
             ViewBag.totalFood = totalfood;

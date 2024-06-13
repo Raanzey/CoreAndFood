@@ -9,21 +9,19 @@ using System.Security.Cryptography.X509Certificates;
 namespace CoreAndFood.Controllers
 {
 
-    public class CategoryController : Controller
+    public class CategoryController : BaseController
     {
         CategoryRepository categoryRepository = new CategoryRepository();
 		public IActionResult Index()
         {
-            var userName = HttpContext.User.Identity.Name;
-            TempData["UserName"] = userName;
-            
+            TempData["UserName"] = User_Name();
+
             return View(categoryRepository.TList());
         }
         [HttpGet]
         public IActionResult CategoryAdd()
         {
-            var userName = HttpContext.User.Identity.Name;
-            TempData["UserName"] = userName;
+            TempData["UserName"] = User_Name();
             return View();
         }
         [HttpPost]
@@ -45,8 +43,7 @@ namespace CoreAndFood.Controllers
                 Description=x.Description,
                 CategoryID=x.CategoryID
             };
-            var userName = HttpContext.User.Identity.Name;
-            TempData["UserName"] = userName;
+            TempData["UserName"] = User_Name();
             return View(ct);
         }
         [HttpPost]
